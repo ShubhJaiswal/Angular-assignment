@@ -8,6 +8,7 @@ import { AppComponent } from './app.component';
 import { PostListComponent } from './components/postList/postList.component';
 
 import { StoreModule } from '@ngrx/store';
+import { StoreDevtoolsModule } from '@ngrx/store-devtools';
 
 import { rootReducer } from './stateStore/reducers';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
@@ -33,6 +34,7 @@ import { MatModule } from './mat.module';
     HttpClientModule,
     FormsModule,
     StoreModule.forRoot(rootReducer),
+    StoreDevtoolsModule.instrument(),
     BrowserAnimationsModule,
     NgxPaginationModule,    
     MatModule
