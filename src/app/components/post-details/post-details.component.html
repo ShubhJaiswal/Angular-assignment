@@ -1,0 +1,22 @@
+
+
+
+<div class="post-container">
+    <h2 class="post-title">Title:  {{post?.title}}</h2>
+    <p class="post-author">UserId: {{post?.userId}}</p>
+    <p class="post-date">Id: {{post?.id}}</p>
+    <p class="post-content">Description: {{post?.body}}</p>
+
+    <div class="comments" *ngIf="comments">
+      <h2>Comments</h2>
+      <div *ngFor="let comment of comments">
+        <strong>{{comment?.email}}</strong>
+        <p>{{comment?.body}}</p>
+      </div>
+    </div>
+    <button (click)="back()" mat-raised-button color="primary">Back to Post List</button>
+  </div>
+  
+
+  
+  

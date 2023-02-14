@@ -1,0 +1,35 @@
+<ng-container *ngIf="!loading && !postListError">
+  <div class="search-container">
+    <input type="text" placeholder="Search here..." [(ngModel)]="searchTerm">
+  </div>
+
+  <table>
+    <tr>
+      <th class="id-column">ID</th>
+      <th class="title-column">Title</th>
+    </tr>
+    <ng-container *ngIf="(postList | search: searchTerm).length == 0; else hasResults">
+      <tr>
+        <td colspan="2">No results found</td>
+      </tr>
+    </ng-container>
+
+    <ng-template #hasResults>
+      <tr *ngFor="let post of postList | search: searchTerm  | paginate: { itemsPerPage: 10, currentPage: p }"
+        (click)="goToDetails(post.id)">
+        <td class="id-column">{{ post.id }}</td>
+        <td class="title-column">{{ post.title }}</td>
+      </tr>
+    </ng-template>
+  </table>
+  <pagination-controls class="pagination" (pageChange)="p = $event"></pagination-controls>
+</ng-container>
+
+
+<mat-spinner class="spinner" *ngIf="this.loading"></mat-spinner>
+
+<div *ngIf="this.postListError" class="error">
+  <mat-icon class="icon">error_outline</mat-icon>
+  <span class="error-message">Error Occured!</span>
+  <button mat-raised-button (click)="tryAgain()" color="warn">Try Again</button>
+</div>
