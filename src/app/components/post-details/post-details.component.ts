@@ -29,13 +29,15 @@ export class PostDetailsComponent implements OnInit {
   getPostById() {
 
     const post$ = this.route.params.pipe(map((data) => data.id),
-      switchMap((postId) => this.utility.getPostById(postId)),
-      filter(res => !!res));
+      switchMap((postId) => {
+        return this.utility.getPostById(postId)
+      }),
+      filter(res => {
+        return !!res
+      }));
 
     post$.subscribe((post: Post) => {
-
       this.post = post;
-
       this.postService.getPostComments(+post.id)
         .subscribe((commentsResponse: PostComment[]) => {
           this.comments = commentsResponse;

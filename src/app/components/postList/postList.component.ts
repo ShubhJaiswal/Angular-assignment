@@ -1,9 +1,14 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { Observable, Subscription } from 'rxjs';
+import { Store } from '@ngrx/store';
+import { combineLatest, Observable, of, Subscription } from 'rxjs';
+import { take } from 'rxjs/operators';
 import { Post } from 'src/app/model/post.interface';
+import { PostsService } from 'src/app/service/posts.service';
 import { UtilityService } from 'src/app/service/utility.service';
-
+import { RootReducerState } from 'src/app/stateStore';
+import { PostListFailureAction, PostListRequestAction, PostListSuccessAction } from 'src/app/stateStore/actions/posts.action';
+import { getPostById, getPostListError, getPostsList, getPostsLoaded, getPostsLoading } from '../../stateStore/selector/posts.selector';
 
 @Component({
   selector: 'app-posts',
@@ -22,18 +27,44 @@ export class PostListComponent implements OnInit {
   subscriptions!: Subscription;
   constructor(
     private router: Router,
-    private utilityService: UtilityService
+    private utilityService: UtilityService,
+    private store: Store<RootReducerState>,
+    private api: PostsService
   ) { }
 
 
 
   ngOnInit() {
-
     this.getPostList();
   }
 
 
   getPostList() {
+    // const observer$ = this.utilityService.getPostsList();
+
+    // const getpostLoading$ = this.store.select(getPostsLoading);
+    // const getpostLoaded$ = this.store.select(getPostsLoaded);
+    // const getPostList$ = this.store.select(getPostsList);
+    // const getPostListError$ = this.store.select(getPostListError);
+
+    // combineLatest([getpostLoading$, getpostLoaded$, getPostList$, getPostListError$]).pipe(take(1)).subscribe((data) => {
+    //   if (!data[0] && !data[1]) {
+    //     debugger;
+    //     this.store.dispatch(new PostListRequestAction());
+    //     this.postList = data[2];
+    //     this.loading = data[0];
+    //     this.postListError = data[3];
+    //     this.api.getAllPosts().subscribe((res: Post[]) => {
+    //       this.store.dispatch(new PostListSuccessAction({ posts: res }));
+          
+    //     }, error => {
+    //       this.store.dispatch(new PostListFailureAction());
+    //     });
+
+       
+    //   }
+    // });
+
 
     const observer$ = this.utilityService.getPostsList();
     const postsList$ = observer$[1];

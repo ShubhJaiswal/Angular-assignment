@@ -1,5 +1,5 @@
 import { Post } from "src/app/model/post.interface";
-import { Action } from "../actions";
+import { Action } from "../actions/posts.action";
 import * as UserActions from '../actions/posts.action';
 
 export interface PostReducerState {
@@ -31,13 +31,12 @@ export function PostReducer(state = initialState, action: Action): PostReducerSt
 
     switch (action.type) {
         case UserActions.POST_LIST_REQUEST: {
-            return { ...state, loading: true }
+            return { ...state , loading: true }
         }
 
         case UserActions.POST_LIST_SUCCESS: {
-
-            const updatedPosts = state.posts.concat(action.payload.posts);
-            return { ...state, loaded: true, loading: false, posts: updatedPosts, error: false }
+            
+            return { ...state, loaded: true, loading: false, posts: action.payload.posts, error: false }
         }
 
 
@@ -45,12 +44,6 @@ export function PostReducer(state = initialState, action: Action): PostReducerSt
 
 
             return { ...state, error: true, loading: false }
-        }
-
-        case UserActions.POST_VISIT: {
-            
-            const updatedPosts = state.posts.length ?  state.posts.concat(action.payload.posts) : [action.payload.post];
-            return { ...state, loaded: true, loading: false, posts: updatedPosts, error: false }
         }
 
         default: {

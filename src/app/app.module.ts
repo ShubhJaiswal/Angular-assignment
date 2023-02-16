@@ -10,7 +10,7 @@ import { PostListComponent } from './components/postList/postList.component';
 import { StoreModule } from '@ngrx/store';
 import { StoreDevtoolsModule } from '@ngrx/store-devtools';
 
-import { rootReducer } from './stateStore/reducers';
+import { rootReducer } from './stateStore';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 import { SearchPipe } from './pipe/search.pipe';

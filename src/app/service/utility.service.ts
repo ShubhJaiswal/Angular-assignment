@@ -2,8 +2,9 @@ import { Injectable } from '@angular/core';
 import { State, Store } from '@ngrx/store';
 import { combineLatest, Observable, of, } from 'rxjs';
 import { Post } from '../model/post.interface';
-import { PostListFailureAction, PostListRequestAction, PostListSuccessAction, PostVisitAction } from '../stateStore/actions/posts.action';
-import { getPostById, getPostListError, getPostsList, getPostsLoaded, getPostsLoading, RootReducerState } from '../stateStore/reducers';
+import { PostListFailureAction, PostListRequestAction, PostListSuccessAction } from '../stateStore/actions/posts.action';
+import { RootReducerState } from '../stateStore';
+import {  getPostById, getPostListError, getPostsList, getPostsLoaded, getPostsLoading } from '../stateStore/selector/posts.selector';
 import { PostsService } from './posts.service';
 import { take } from 'rxjs/operators'
 
@@ -44,7 +45,7 @@ export class UtilityService {
 
     const post$ = this.store.select(getPostById(id));
     post$.pipe(take(1)).subscribe((res) => {
-
+      
       if (force || !res) {
         // return this.api.getPost(id).subscribe(( post: Post ) => {
         //   console.log(post);
@@ -63,7 +64,7 @@ export class UtilityService {
 
       }
       return res;
-    });
+    });    
     return post$;
   }
 }
